@@ -1,10 +1,12 @@
 ISA memory footprint study
 ==========================
 
-A small study on the object footprint size used by ISA-API for experimental
-DAGs. The results of this study are to go with the paper *ISA-API A Python
-library for creating, handling and publishing experimental metadata* in
-preparation for submission to *GigaScience*.
+A small study on the memory footprint size used by ISA-API for experimental
+DAGs.
+
+The results of this study are to go with the paper in preparation "ISA-API 
+A Python library for creating, handling and publishing experimental metadata" 
+to submit to *GigaScience*.
 
 This study uses a snapshot taken from MetaboLights of all ISA-Tab metadata on
 10 July 2017. This raw data is found in `data/raw/`.
@@ -81,4 +83,4 @@ Project Organization
 
 --------
 
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+<p><sup>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>.</sup></p>
