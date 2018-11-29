@@ -1,0 +1,5 @@
+Value display name,Description,Data type,Character length,Acceptable values,Required?,Accepts null value?
+fname,File name of the ISA-Tab table,String,255,Any valid Windows or Linux formatted file name,y,n
+disk_size,"Size of file as reported by the operating system, in bytes",Integer,,All positive integers,y,n
+df_size,"Size of the Pandas DataFrame object and related objects, in bytes",Integer,,All positive integers,y,n
+isa_size,"Size of the ISA objects and related objects, in bytes",Integer,,All positive integers,y,n
