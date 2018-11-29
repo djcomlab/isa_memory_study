@@ -40,10 +40,10 @@ For more detail on the data processing, please check the source code.
 `data/processed/`, writing out a series of PDF and PNG format figures into
 `reports/figures/`. It uses the `src/visualization/make_figures.py` script.
 
-**If the contents of `data/interim/` and `data/processed/` have not yet been generated, by running `make figures` it will implicitly run `make data` first. It may take some time to run the first time since it loads every MTBLS study twice (maybe takes about 60 minutes).**
+Note: If the contents of `data/interim/` and `data/processed/` have not yet been generated, by running `make figures` it will implicitly run `make data` first. It may take some time to run the first time since it loads every MTBLS study twice (maybe takes about 60 minutes).
 
 In the `notebooks/` directory you can find exploratory analyses and work
-towards the code used for generating the figures.
+towards the code used for generating the figures. Relies on the data having been processed (using `make data`).
 
 Project Organization
 ------------
