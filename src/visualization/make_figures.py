@@ -7,6 +7,7 @@ import pandas as pd
 from os.path import join
 import logging
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import numpy as np
 
 
@@ -71,6 +72,9 @@ def main(input_file, output_filepath):
     ax_scatter.plot(disk_sizes, mem_sizes, 'o', c='orange', alpha=0.25)
     ax_scatter.set_xlabel('Disk size (kb)')
     ax_scatter.set_ylabel('Memory size (kb)')
+    ora_patch = mpatches.Patch(color='orange', label='ISA objects')
+    gre_patch = mpatches.Patch(color='green', label='DataFrame objects')
+    fig_scatter.legend(handles=[gre_patch, ora_patch])
     fig_scatter.savefig(join(output_filepath, 'scatter.pdf'))
     fig_scatter.savefig(join(output_filepath, 'scatter.png'))
 
