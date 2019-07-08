@@ -9,6 +9,7 @@ BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = isa_memory_study
 PYTHON_INTERPRETER = python3
+MAX_FILES = -1
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
@@ -27,8 +28,8 @@ requirements: test_environment
 
 ## Make Dataset
 data: requirements
-	$(PYTHON_INTERPRETER) src/data/make_dataset.py $(PROJECT_DIR)/data/raw/ $(PROJECT_DIR)/data/interim/
-	$(PYTHON_INTERPRETER) src/data/make_memory_footprint_dataset.py $(PROJECT_DIR)/data/interim/ $(PROJECT_DIR)/data/processed/memory_footprint.csv
+	$(PYTHON_INTERPRETER) src/data/make_dataset.py $(PROJECT_DIR)/data/raw/ $(PROJECT_DIR)/data/interim/ $(MAX_FILES)
+	$(PYTHON_INTERPRETER) src/data/make_memory_footprint_dataset.py $(PROJECT_DIR)/data/interim/ $(PROJECT_DIR)/data/processed/memory_footprint.csv $(MAX_FILES)
 	$(PYTHON_INTERPRETER) src/data/transform_to_categorized.py $(PROJECT_DIR)/data/processed/memory_footprint.csv $(PROJECT_DIR)/data/processed/memory_footprint_by_category.csv
 
 ## Make plots from data as figures for publications

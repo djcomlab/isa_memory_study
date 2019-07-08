@@ -18,19 +18,27 @@ def main(input_file, output_file):
     logger.info('transforming dataset to categorized table')
     df = pd.read_csv(input_file)
     # put the records by category to help with downstream processing
+    study_ids = []
+    fnames = []
     disk_sizes = []
     obj_sizes = []
     categories = []
 
     for _, row in df.iterrows():
+        study_ids.append(row.studyid)
+        fnames.append(row.fname)
         disk_sizes.append(row.disk_size)
         obj_sizes.append(row.df_size)
         categories.append('DataFrame')
+        study_ids.append(row.studyid)
+        fnames.append(row.fname)
         disk_sizes.append(row.disk_size)
         obj_sizes.append(row.isa_size)
         categories.append('ISA')
 
     df_by_cat = pd.DataFrame({
+        'study_id': study_ids,
+        'fname': fnames,
         'disk_size': disk_sizes,
         'size': obj_sizes,
         'log_size': np.log(obj_sizes),

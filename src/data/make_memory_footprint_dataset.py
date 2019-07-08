@@ -63,7 +63,8 @@ def total_size(o, handlers={}, verbose=False):
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path(exists=False))
-def main(input_filepath, output_filepath):
+@click.argument('max_files', type=click.INT)
+def main(input_filepath, output_filepath, max_files=-1):
     """ Runs data processing scripts to run measureents on the metadata found
         in data/interim to extract the loaded object sizes of the ISA objects,
         Pandas DataFrame objects, and the raw size of the files as reported on
@@ -76,6 +77,8 @@ def main(input_filepath, output_filepath):
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from processed data')
+    if max_files > 0:
+        logger.info('limiting to {} study folders'.format(max_files))
     if exists(output_filepath):
         if getsize(output_filepath) > 0:
             logger.info('Output file {} already contains data. '
@@ -84,9 +87,9 @@ def main(input_filepath, output_filepath):
                          output_filepath))
             exit(0)
     with open(output_filepath, 'w') as output_file:
-        output_file.write('fname,disk_size,df_size,isa_size\n')
-        logger.info('fname', ['disk_size', 'df_size', 'isa_size'])
-        for study_dir in tqdm(glob(join(input_filepath, 'MTBLS*'))):
+        output_file.write('studyid,fname,disk_size,df_size,isa_size\n')
+        logger.info('studyid, fname', ['disk_size', 'df_size', 'isa_size'])
+        for study_dir in tqdm(glob(join(input_filepath, 'MTBLS*'))[:max_files]):
             try:
                 isa = load(study_dir)
                 for s in isa.studies:
@@ -95,16 +98,16 @@ def main(input_filepath, output_filepath):
                     df_size = total_size(df, verbose=False)
                     disk_size = getsize(join(study_dir, fname))
                     isa_size = total_size(s.process_sequence, verbose=False)
-                    output_file.write('"{}",{},{},{}\n'.format(
-                                     fname, disk_size, df_size, isa_size))
+                    output_file.write('{}, "{}",{},{},{}\n'.format(
+                                     s.identifier, fname, disk_size, df_size, isa_size))
                     for a in s.assays:
                         fname = a.filename
                         df = pd.read_csv(join(study_dir, fname), sep='\t')
                         df_size = total_size(df, verbose=False)
                         disk_size = getsize(join(study_dir, fname))
                         isa_size = total_size(a.process_sequence, verbose=False)
-                        output_file.write('"{}",{},{},{}\n'.format(
-                                          fname, disk_size, df_size, isa_size))
+                        output_file.write('{}, "{}",{},{},{}\n'.format(
+                                          s.identifier, fname, disk_size, df_size, isa_size))
                 output_file.flush()
             except KeyboardInterrupt:
                 exit(1)

@@ -14,7 +14,8 @@ from sys import exit
 @click.command()
 @click.argument('input_filepath', type=click.Path(exists=True))
 @click.argument('output_filepath', type=click.Path())
-def main(input_filepath, output_filepath):
+@click.argument('max_files', type=click.INT)
+def main(input_filepath, output_filepath, max_files=-1):
     """ Runs data processing scripts to turn raw data from data/raw into
         cleaned data ready to be measured (saved in data/interim).
 
@@ -24,13 +25,15 @@ def main(input_filepath, output_filepath):
     """
     logger = logging.getLogger(__name__)
     logger.info('making final data set from raw data')
+    if max_files > 0:
+        logger.info('limiting to {} study folders'.format(max_files))
     if len(glob(join(output_filepath, 'MTBLS*'))) > 0:
         logging.info('Output directory {} already contains MTBLS studies. '
                      'Skipping writing to data/interim. If this is not '
                      'expected, do you need to "make clean" first?'.format(
                       output_filepath))
         exit(0)
-    for study_dir in tqdm(glob(join(input_filepath, 'MTBLS*'))):
+    for study_dir in tqdm(glob(join(input_filepath, 'MTBLS*'))[:max_files]):
         study_id = basename(study_dir)
         try:
             load(study_dir)
