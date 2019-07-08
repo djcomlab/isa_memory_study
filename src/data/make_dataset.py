@@ -19,7 +19,7 @@ def main(input_filepath, output_filepath):
         cleaned data ready to be measured (saved in data/interim).
 
         Cleaning: We iterate through our raw data MTBLS metadata and run
-        ISA-Tab load onmeach to check for loading errors. If the study is not
+        ISA-Tab load oneach to check for loading errors. If the study is not
         loadable, we exclude the study metadata from this analysis.
     """
     logger = logging.getLogger(__name__)
@@ -36,7 +36,7 @@ def main(input_filepath, output_filepath):
             load(study_dir)
             copytree(study_dir, '{}/{}'.format(output_filepath, study_id))
         except Exception:
-            logging.info('Exluding {}'.format(study_dir))
+            logging.info('Excluding {}'.format(study_dir))
 
 
 if __name__ == '__main__':
