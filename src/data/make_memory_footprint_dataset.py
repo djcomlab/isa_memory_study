@@ -98,7 +98,7 @@ def main(input_filepath, output_filepath, max_files=-1):
                     df_size = total_size(df, verbose=False)
                     disk_size = getsize(join(study_dir, fname))
                     isa_size = total_size(s.process_sequence, verbose=False)
-                    output_file.write('{}, "{}",{},{},{}\n'.format(
+                    output_file.write('"{}","{}",{},{},{}\n'.format(
                                      s.identifier, fname, disk_size, df_size, isa_size))
                     for a in s.assays:
                         fname = a.filename
@@ -106,7 +106,7 @@ def main(input_filepath, output_filepath, max_files=-1):
                         df_size = total_size(df, verbose=False)
                         disk_size = getsize(join(study_dir, fname))
                         isa_size = total_size(a.process_sequence, verbose=False)
-                        output_file.write('{}, "{}",{},{},{}\n'.format(
+                        output_file.write('"{}","{}",{},{},{}\n'.format(
                                           s.identifier, fname, disk_size, df_size, isa_size))
                 output_file.flush()
             except KeyboardInterrupt:
