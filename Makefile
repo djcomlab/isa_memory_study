@@ -9,7 +9,7 @@ BUCKET = [OPTIONAL] your-bucket-for-syncing-data (do not include 's3://')
 PROFILE = default
 PROJECT_NAME = isa_memory_study
 PYTHON_INTERPRETER = python3
-MAX_FILES = -1
+MAX_FILES = 500
 
 ifeq (,$(shell which conda))
 HAS_CONDA=False
